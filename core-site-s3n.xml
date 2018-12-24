@@ -17,11 +17,7 @@
 <configuration>
   <property>
     <name>fs.defaultFS</name>
-    <value>s3n://fakes3:4569/infra-solr</value>
-  </property>
-  <property>
-    <name>fs.s3n.endpoint</name>
-    <value>http://fakes3:4569</value>
+    <value>s3n://oszabo/infra-solr</value>
   </property>
   <property>
     <name>fs.s3n.awsAccessKeyId</name>
@@ -37,14 +33,6 @@
   </property>
   <property>
     <name>fs.AbstractFileSystem.s3n.impl</name>
-    <value>org.apache.hadoop.fs.s3n.S3N</value>
-  </property>
-  <property>
-    <name>fs.s3n.path.style.access</name>
-    <value>true</value>
-  </property>
-  <property>
-    <name>fs.s3n.multiobjectdelete.enable</name>
-    <value>false</value>
+    <value>org.apache.hadoop.fs.s3n.S3NativeFileSystem</value>
   </property>
 </configuration>
