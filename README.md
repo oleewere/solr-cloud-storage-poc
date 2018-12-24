@@ -1,5 +1,5 @@
-# Ambari Infra Solr S3 POC
-POC for supporting S3 through HDFS client for Ambari Infra Solr
+# Ambari Infra Solr Cloud Storage POC
+POC for supporting S3/GCS/WASB/ADLSv2 through HDFS client for Ambari Infra Solr
 
 ### Requirements
 - git
