@@ -28,6 +28,7 @@ TEST_SOLR_CLOUD_STORAGE_URL=s3a://infra-solr
 TEST_SOLR_AWS_ACCESS_KEY=MyAccessKey
 TEST_SOLR_AWS_SECRET_KEY=MySecretKey
 TEST_SOLR_AZURE_ACCESS_KEY=MyAccessKey
+TEST_SOLR_AZURE_ACCOUNT=MyAccount
 EOF
   exit 0
 fi
@@ -62,6 +63,7 @@ elif [[ "$TEST_SOLR_STORAGE_MODE" == "WASB" ]]; then
   cp core-site-wasb.xml core-site.xml
   sed -i.bak "s#{TEST_SOLR_CLOUD_STORAGE_URL}#$TEST_SOLR_CLOUD_STORAGE_URL#g" core-site.xml && rm core-site.xml.bak
   sed -i.bak "s#{TEST_SOLR_AZURE_ACCESS_KEY}#$TEST_SOLR_AZURE_ACCESS_KEY#g" core-site.xml && rm core-site.xml.bak
+  sed -i.bak "s#{TEST_SOLR_AZURE_ACCOUNT}#$TEST_SOLR_AZURE_ACCOUNT#g" core-site.xml && rm core-site.xml.bak
   docker-compose up -d zookeeper solr logsearch
   docker logs -f infra_solr
 elif [[ "$TEST_SOLR_STORAGE_MODE" == "ABFS" ]]; then
@@ -69,6 +71,7 @@ elif [[ "$TEST_SOLR_STORAGE_MODE" == "ABFS" ]]; then
   cp core-site-abfs.xml core-site.xml
   sed -i.bak "s#{TEST_SOLR_CLOUD_STORAGE_URL}#$TEST_SOLR_CLOUD_STORAGE_URL#g" core-site.xml && rm core-site.xml.bak
   sed -i.bak "s#{TEST_SOLR_AZURE_ACCESS_KEY}#$TEST_SOLR_AZURE_ACCESS_KEY#g" core-site.xml && rm core-site.xml.bak
+  sed -i.bak "s#{TEST_SOLR_AZURE_ACCOUNT}#$TEST_SOLR_AZURE_ACCOUNT#g" core-site.xml && rm core-site.xml.bak
   docker-compose up -d zookeeper solr logsearch
   docker logs -f infra_solr
 else

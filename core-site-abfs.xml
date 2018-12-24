@@ -4,7 +4,7 @@
     <value>{TEST_SOLR_CLOUD_STORAGE_URL}</value>
   </property>
   <property>
-    <name>fs.azure.account.key.myaccount.dfs.core.windows.net</name>
+    <name>fs.azure.account.key.{TEST_SOLR_AZURE_ACCOUNT}.dfs.core.windows.net</name>
     <value>{TEST_SOLR_AZURE_ACCESS_KEY}</value>
   </property>
   <property>
