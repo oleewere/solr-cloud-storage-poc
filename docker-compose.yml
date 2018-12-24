@@ -37,7 +37,7 @@ services:
     environment:
       ZK_CONNECT_STRING: zookeeper:2181
       SOLR_PORT: 8886
-      SOLR_OPTS: "-Dsolr.hdfs.home=s3n://oszabo/infra-solr -Dsolr.hdfs.confdir=/etc/hadoop/conf"
+      SOLR_OPTS: "-Dsolr.hdfs.home=s3a://infra-solr -Dsolr.hdfs.confdir=/etc/hadoop/conf"
       CLOUD_MODE: "true"
     volumes:
       - ./core-site-s3a.xml:/etc/hadoop/conf/core-site.xml
