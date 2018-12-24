@@ -1,6 +1,13 @@
 # Ambari Infra Solr S3 POC
 POC for supporting S3 through HDFS client for Ambari Infra Solr
 
+### Requirements
+- git
+- JDK 8+
+- Maven 3.5.x+
+- docker & docker-compose
+- AWS cli
+
 ### Checkout Ambari Infra Solr project and build container
 ```bash
 git clone git@github.com:apache/ambari-infra.git
