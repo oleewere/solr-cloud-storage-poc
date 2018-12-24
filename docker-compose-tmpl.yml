@@ -69,6 +69,25 @@ services:
       logsearch-network:
         aliases:
           - testbucket.fakes3
+  fakegcs:
+    image: singularities/datastore-emulator
+    hostname: fakegcs
+    ports:
+      - "8081:8081"
+    environment:
+      - DATASTORE_PROJECT_ID=project-test
+      - DATASTORE_LISTEN_ADDRESS=0.0.0.0:8081
+    networks:
+      - logsearch-network
+  fakeazure:
+    image: arafato/azurite
+    hostname: fakeazure
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+    networks:
+      - logsearch-network
 networks:
    logsearch-network:
       driver: bridge
