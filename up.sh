@@ -15,8 +15,56 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 docker-compose kill
-docker-compose up -d fakes3
-sleep 5
-aws --endpoint-url=http://localhost:4569 s3 mb s3://infra-solr
-docker-compose up -d logsearch solr zookeeper
-docker logs -f infra_solr
+
+if [[ -f Profile ]]; then
+  echo "Prolfe file exists. Sourcing it ..."
+else
+  echo "Profile file does not exist, creating it ... check/update the file, then restart."
+  cat << EOF > Profile
+TEST_SOLR_STORAGE_MODE=S3A
+TEST_SOLR_CLOUD_STORAGE_URL=s3a://infra-solr
+#TEST_SOLR_CLOUD_STORAGE_URL=wasb://infra-solr@myaccount.blob.core.windows.net
+#TEST_SOLR_CLOUD_STORAGE_URL=abfs://infra-solr@myaccount.dfs.core.windows.net
+TEST_SOLR_CORE_SITE_FILE=core-site-s3a.xml
+TEST_SOLR_AWS_ACCESS_KEY=MyAccessKey
+TEST_SOLR_AWS_SECRET_KEY=MySecretKey
+TEST_SOLR_AZURE_ACCESS_KEY=MyAccessKey
+EOF
+  exit 0
+fi
+
+source Profile
+
+cp docker-compose-tmpl.yml docker-compose.yml
+sed -i.bak "s#{TEST_SOLR_CLOUD_STORAGE_URL}#$TEST_SOLR_CLOUD_STORAGE_URL#g" docker-compose.yml && rm docker-compose.yml.bak
+sed -i.bak "s#{TEST_SOLR_CLOUD_STORAGE_URL}#$TEST_SOLR_CLOUD_STORAGE_URL#g" docker-compose.yml && rm docker-compose.yml.bak
+
+if [[ "$TEST_SOLR_STORAGE_MODE" == "S3A" ]]; then
+  echo "Using S3A HDFS client setup for Solr ..."
+  cp core-site-s3a.xml core-site.xml
+  sed -i.bak "s#{TEST_SOLR_CORE_SITE_FILE}#$TEST_SOLR_CORE_SITE_FILE#g" core-site.xml && rm core-site.xml.bak
+  docker-compose up -d fakes3
+  sleep 5
+  aws --endpoint-url=http://localhost:4569 s3 mb s3://infra-solr
+  docker-compose up -d zookeeper solr logsearch
+  docker logs -f infra_solr
+elif [[ "$TEST_SOLR_STORAGE_MODE" == "S3N" ]]; then
+  echo "Using S3N HDFS client setup for Solr ..."
+  cp core-site-s3a.xml core-site.xml
+  sed -i.bak "s#{TEST_SOLR_CORE_SITE_FILE}#$TEST_SOLR_CORE_SITE_FILE#g" core-site.xml && rm core-site.xml.bak
+  docker-compose up -d zookeeper solr logsearch
+  docker logs -f infra_solr
+elif [[ "$TEST_SOLR_STORAGE_MODE" == "WASB" ]]; then
+  echo "Using WASB HDFS client setup for Solr ..."
+  cp core-site-s3a.xml core-site.xml
+  sed -i.bak "s#{TEST_SOLR_CORE_SITE_FILE}#$TEST_SOLR_CORE_SITE_FILE#g" core-site.xml && rm core-site.xml.bak
+  docker-compose up -d zookeeper solr logsearch
+  docker logs -f infra_solr
+elif [[ "$TEST_SOLR_STORAGE_MODE" == "ADLS" ]]; then
+  echo "Using ADLSv2 HDFS client setup for Solr ..."
+  cp core-site-s3a.xml core-site.xml
+  sed -i.bak "s#{TEST_SOLR_CORE_SITE_FILE}#$TEST_SOLR_CORE_SITE_FILE#g" core-site.xml && rm core-site.xml.bak
+  docker-compose up -d zookeeper solr logsearch
+else
+  echo "No valid 'TEST_SOLR_STORAGE_MODE' set in Profile"
+fi

@@ -1,0 +1,26 @@
+<configuration>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>{TEST_SOLR_CLOUD_STORAGE_URL}</value>
+  </property>
+  <property>
+    <name>fs.azure.account.key.myaccount.blob.core.windows.net</name>
+    <value>{TEST_SOLR_AZURE_ACCESS_KEY}</value>
+  </property>
+  <property>
+    <name>fs.AbstractFileSystem.wasb.impl</name>
+    <value>org.apache.hadoop.fs.azure.Wasb</value>
+  </property>
+  <property>
+    <name>fs.AbstractFileSystem.wasbs.impl</name>
+    <value>org.apache.hadoop.fs.azure.Wasbs</value>
+  </property>
+  <property>
+    <name>fs.azure.selfthrottling.read.factor</name>
+    <value>1.0</value>
+  </property>
+  <property>
+    <name>fs.azure.selfthrottling.write.factor</name>
+    <value>1.0</value>
+  </property>
+</configuration>

@@ -17,7 +17,7 @@
 <configuration>
   <property>
     <name>fs.defaultFS</name>
-    <value>s3a:///infra-solr</value>
+    <value>{TEST_SOLR_CLOUD_STORAGE_URL}</value>
   </property>
   <property>
     <name>fs.s3a.endpoint</name>
@@ -25,11 +25,11 @@
   </property>
   <property>
     <name>fs.s3a.access.key</name>
-    <value>MyAccessKey</value>
+    <value>{TEST_SOLR_AWS_ACCESS_KEY}</value>
   </property>
   <property>
     <name>fs.s3a.secret.key</name>
-    <value>MySecretKey</value>
+    <value>{TEST_SOLR_AWS_SECRET_KEY}</value>
   </property>
   <property>
     <name>fs.s3a.path.style.access</name>
