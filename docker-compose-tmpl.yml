@@ -56,7 +56,7 @@ services:
     environment:
       ZK_CONNECT_STRING: zookeeper:2181/infra-solr
     volumes:
-      - ./s3-solrconfig.xml:/usr/lib/ambari-logsearch-portal/conf/solr_configsets/hadoop_logs/conf/solrconfig.xml
+      - ./cloud-storage-solrconfig.xml:/usr/lib/ambari-logsearch-portal/conf/solr_configsets/hadoop_logs/conf/solrconfig.xml
   fakes3:
     image: localstack/localstack
     hostname: fakes3
