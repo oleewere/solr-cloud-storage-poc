@@ -33,6 +33,6 @@
   </property>
   <property>
     <name>fs.AbstractFileSystem.s3n.impl</name>
-    <value>org.apache.hadoop.fs.s3n.S3NatieFileSystem</value>
+    <value>org.apache.hadoop.fs.s3n.S3NativeFileSystem</value>
   </property>
 </configuration>
