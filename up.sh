@@ -74,6 +74,12 @@ elif [[ "$TEST_SOLR_STORAGE_MODE" == "ABFS" ]]; then
   sed -i.bak "s#{TEST_SOLR_AZURE_ACCOUNT}#$TEST_SOLR_AZURE_ACCOUNT#g" core-site.xml && rm core-site.xml.bak
   docker-compose up -d zookeeper solr logsearch
   docker logs -f infra_solr
+elif [[ "$TEST_SOLR_STORAGE_MODE" == "GCS" ]]; then
+  echo "Using GCS HDFS client setup for Solr ..."
+  cp core-site-gcs.xml core-site.xml
+  sed -i.bak "s#{TEST_SOLR_CLOUD_STORAGE_URL}#$TEST_SOLR_CLOUD_STORAGE_URL#g" core-site.xml && rm core-site.xml.bak
+  docker-compose up -d zookeeper solr logsearch
+  docker logs -f infra_solr
 else
   echo "No valid 'TEST_SOLR_STORAGE_MODE' set in Profile"
 fi
