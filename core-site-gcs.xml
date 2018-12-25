@@ -29,10 +29,10 @@
   </property>
   <property>
     <name>fs.gs.project.id</name>
-    <value>project-test</value>
+    <value>{TEST_SOLR_GCS_PROJECT_ID}</value>
   </property>
   <property>
     <name>fs.gs.working.dir</name>
-    <value>/</value>
+    <value>{TEST_SOLR_GCS_WORKDIR}</value>
   </property>
 </configuration>

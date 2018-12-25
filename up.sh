@@ -29,6 +29,8 @@ TEST_SOLR_AWS_ACCESS_KEY=MyAccessKey
 TEST_SOLR_AWS_SECRET_KEY=MySecretKey
 TEST_SOLR_AZURE_ACCESS_KEY=MyAccessKey
 TEST_SOLR_AZURE_ACCOUNT=MyAccount
+TEST_SOLR_GCS_PROJECT_ID=project-test
+TEST_SOLR_GCS_WORKDIR=/
 EOF
   exit 0
 fi
@@ -78,6 +80,8 @@ elif [[ "$TEST_SOLR_STORAGE_MODE" == "GCS" ]]; then
   echo "Using GCS HDFS client setup for Solr ..."
   cp core-site-gcs.xml core-site.xml
   sed -i.bak "s#{TEST_SOLR_CLOUD_STORAGE_URL}#$TEST_SOLR_CLOUD_STORAGE_URL#g" core-site.xml && rm core-site.xml.bak
+  sed -i.bak "s#{TEST_SOLR_GCS_PROJECT_ID}#$TEST_SOLR_GCS_PROJECT_ID#g" core-site.xml && rm core-site.xml.bak
+  sed -i.bak "s#{TEST_SOLR_GCS_WORKDIR}#$TEST_SOLR_GCS_WORKDIR#g" core-site.xml && rm core-site.xml.bak
   docker-compose up -d zookeeper solr logsearch
   docker logs -f infra_solr
 else
